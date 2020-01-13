@@ -10,17 +10,24 @@ export default function App() {
   // TODO: Add useState to track data from useEffect
   const [data, setData] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     // TODO: Add API Request here - must run in `useEffect`
     //  Important: verify the 2nd `useEffect` parameter: the dependancies array!
     fetchData();
-  }, []);
+  }, [page]);
 
   const fetchData = () => {
+    console.log("page", page);
     axios
-      .get(`https://rickandmortyapi.com/api/character/?name=${inputValue}`)
-      .then(res => setData(res.data.results))
+      .get(
+        `https://rickandmortyapi.com/api/character/?name=${inputValue}&page=${page}`
+      )
+      .then(res => {
+        console.log("fire!");
+        setData(res.data.results);
+      })
       .catch(err => console.log(err));
   };
 
@@ -29,13 +36,25 @@ export default function App() {
       <nav>
         <Link to="/">Welcome Page</Link>
         <Link to="/character-list">See Characters</Link>
-        <SearchForm setInputValue={setInputValue} fetchData={fetchData} />
+        <SearchForm
+          setInputValue={setInputValue}
+          inputValue={inputValue}
+          fetchData={fetchData}
+        />
       </nav>
       <Header />
       <Route exact path="/" component={WelcomePage} />
       <Route
         path="/character-list"
-        render={props => <CharacterList {...props} data={data} />}
+        render={props => (
+          <CharacterList
+            {...props}
+            data={data}
+            fetchData={fetchData}
+            page={page}
+            setPage={setPage}
+          />
+        )}
       />
     </main>
   );

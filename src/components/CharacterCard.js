@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function CharacterCard({ char }) {
-  console.log(char);
   return (
     <div
       style={{
