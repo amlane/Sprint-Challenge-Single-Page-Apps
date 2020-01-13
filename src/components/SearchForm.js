@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 
-export default function SearchForm({ setInputValue, fetchData, inputValue }) {
+export default function SearchForm({
+  setInputValue,
+  fetchData,
+  inputValue,
+  setPage
+}) {
   const handleChange = e => {
     setInputValue(e.target.value);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
+    setPage(1);
     fetchData();
-    setInputValue("");
   };
 
   return (

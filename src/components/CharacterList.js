@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CharacterCard from "./CharacterCard";
 
-export default function CharacterList({ data, page, setPage, fetchData }) {
+export default function CharacterList({ data, page, setPage, pageCount }) {
   const increasePage = e => {
     e.preventDefault();
     setPage(++page);
@@ -23,7 +23,7 @@ export default function CharacterList({ data, page, setPage, fetchData }) {
           -
         </button>
         <span style={{ margin: "0 10px" }}>{page}</span>
-        <button onClick={increasePage} disabled={page === 25}>
+        <button onClick={increasePage} disabled={page === pageCount}>
           +
         </button>
       </div>

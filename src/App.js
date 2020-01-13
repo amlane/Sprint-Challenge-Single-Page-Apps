@@ -11,6 +11,7 @@ export default function App() {
   const [data, setData] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(25);
 
   useEffect(() => {
     // TODO: Add API Request here - must run in `useEffect`
@@ -19,13 +20,14 @@ export default function App() {
   }, [page]);
 
   const fetchData = () => {
-    console.log("page", page);
+    console.log("inputValue", inputValue);
     axios
       .get(
         `https://rickandmortyapi.com/api/character/?name=${inputValue}&page=${page}`
       )
       .then(res => {
-        console.log("fire!");
+        console.log("fire", res);
+        setPageCount(res.data.info.pages);
         setData(res.data.results);
       })
       .catch(err => console.log(err));
@@ -40,6 +42,7 @@ export default function App() {
           setInputValue={setInputValue}
           inputValue={inputValue}
           fetchData={fetchData}
+          setPage={setPage}
         />
       </nav>
       <Header />
@@ -50,9 +53,9 @@ export default function App() {
           <CharacterList
             {...props}
             data={data}
-            fetchData={fetchData}
             page={page}
             setPage={setPage}
+            pageCount={pageCount}
           />
         )}
       />
