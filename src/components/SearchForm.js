@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 
-export default function SearchForm() {
- 
+export default function SearchForm({ setInputValue, fetchData }) {
+  const handleChange = e => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    fetchData();
+  };
+
   return (
-    <section className="search-form">
-     // Add a search form here
-    </section>
+    <form onSubmit={handleSubmit} className="search-form">
+      <input onChange={handleChange} />
+      <button>Search</button>
+    </form>
   );
 }
